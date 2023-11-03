@@ -30,26 +30,27 @@
             <option>60</option>
         </select>
         <label for="constraint">分辨率：</label><select id="constraint">
-            <option selected>1920x1080</option>
-            <option>1280x720</option>
-            <option>600x400</option>
-        </select>
-        <label for="videoSource">视频源：</label><select id="videoSource"></select>
+            <option value="1920">1920x1080</option>
+            <option selected value="1280">1280x720</option>
+            <option value="640">640x480</option>
+            <option value="320">320x240</option>
+            <!-- //320x240 qvga -->
+            <!-- //640x480 vga -->
+            <!-- //1280x720 hd -->
+            <!-- //1920x1080 fullhdvga -->
+            </select>
+            <label for="videoSource">视频源：</label><select id="videoSource"></select>
         <button id="startAndStop" disabled>Start</button>
     </div>
     <!--  必须要能选择相机 -> 选择分辨率->开始检查按钮    canvas全屏，通过按钮开始，可以选择分辨率 默认选择后置摄像头 可选 -->
     <!-- navigator.mediaDevices.enumerateDevices() -->
-    <video id="videoInput" width="1920" height="1080" playsinline=true style="display:none;"></video>
+    <video id="videoInput"  autoplay  playsinline=true style="display: none;" ></video>
     <!-- <img alt="" id="file-img" style="width: 400px;height: auto"> -->
     <canvas id="preview-canvas"></canvas>
     <script type="text/javascript" src="main.js"></script>
     <script src="wechat_qrcode_files.js"></script>
     <script type="application/javascript" async src="opencv.js"></script>
-    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
-    <script>
-  // VConsole will be exported to `window.VConsole` by default.
-  var vConsole = new window.VConsole();
-</script>
+    
 </body>
 
 </html>
