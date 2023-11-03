@@ -1,4 +1,51 @@
-<html>
-  <header></header>
-  <body><h1>Hello world</h1></body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>基于微信二维码引擎的Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <style>
+        canvas {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="control" style="z-index: 999;background-color: antiquewhite;">
+        <label for="frequency">频率：</label><select id="frequency">
+            <option selected>5</option>
+            <option>10</option>
+            <option>30</option>
+            <option>60</option>
+        </select>
+        <label for="constraint">分辨率：</label><select id="constraint">
+            <option selected>1920x1080</option>
+            <option>1280x720</option>
+            <option>600x400</option>
+        </select>
+        <label for="videoSource">视频源：</label><select id="videoSource"></select>
+        <button id="startAndStop" disabled>Start</button>
+    </div>
+    <!--  必须要能选择相机 -> 选择分辨率->开始检查按钮    canvas全屏，通过按钮开始，可以选择分辨率 默认选择后置摄像头 可选 -->
+    <!-- navigator.mediaDevices.enumerateDevices() -->
+    <video id="videoInput" width="1920" height="1080" style="display:none;"></video>
+    <!-- <img alt="" id="file-img" style="width: 400px;height: auto"> -->
+    <canvas id="preview-canvas"></canvas>
+    <script type="text/javascript" src="main.js"></script>
+    <script src="wechat_qrcode_files.js"></script>
+    <script type="application/javascript" async src="opencv.js"></script>
+    
+</body>
+
 </html>
