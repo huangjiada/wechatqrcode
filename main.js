@@ -75,6 +75,7 @@ function gotStream(stream) {
 
 function handleError(error) {
   console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+  alert("无法支持的分辨率")
 }
 
 // videoSelect.onchange = start;
@@ -93,12 +94,15 @@ function startDetect() {
   streaming = true;
   startAndStop.innerText = 'Stop';
   //先开启视频
+  frequencySelect.setAttribute('disabled',true);
+  constraintSelect.setAttribute('disabled',true);
+  videoSelect.setAttribute('disabled',true);
   const videoSource = videoSelect.value;
   const constraints = {
     video: {
-      width: { ideal: constraintSelect.value },
+      width: { exact: JSON.parse(constraintSelect.value).width},
       // height: { ideal: videoElement.height },
-      facingMode: "environment",//facingMode: 'user'
+      facingMode: "user",
       deviceId: videoSource ? { exact: videoSource } : undefined
     },
     audio: false
@@ -118,28 +122,31 @@ function stopDetect() {
   // canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   // videoElement.stop();
   startAndStop.innerText = 'Start';
+  frequencySelect.removeAttribute('disabled');
+  constraintSelect.removeAttribute('disabled');
+  videoSelect.removeAttribute('disabled');
 }
 
-constraintSelect.onchange = constraintChange;
+// constraintSelect.onchange = constraintChange;
 
-//可以实时改变 但是也要停止streaming再开启，否则
-function constraintChange(e) {
-  // span输出宽度
-  // widthOutput.textContent = e.target.value;
-  // streaming = false;
-  // videoElement.width = e.target.value;
-  const track = window.stream.getVideoTracks()[0];
-  let constraints = { width: { exact: e.target.value } };
+// //可以实时改变 但是也要停止streaming再开启，否则不会有改变
+// function constraintChange(e) {
+//   // span输出宽度
+//   // widthOutput.textContent = e.target.value;
+//   // streaming = false;
+//   // videoElement.width = e.target.value;
+//   const track = window.stream.getVideoTracks()[0];
+//   let constraints = { width: { exact: e.target.value } };
 
-  console.log('applying ' + JSON.stringify(constraints));
-  track.applyConstraints(constraints)
-    .then(() => {
-      console.log('applyConstraint success');
-    })
-    .catch(err => {
-      alert('applyConstraints'+ err.name);
-    });
-}
+//   console.log('applying ' + JSON.stringify(constraints));
+//   track.applyConstraints(constraints)
+//     .then(() => {
+//       console.log('applyConstraint success');
+//     })
+//     .catch(err => {
+//       alert('applyConstraints'+ err.name);
+//     });
+// }
 
 
 
@@ -159,13 +166,13 @@ function launchVideo() {
   const out = new cv.MatVector();
 
   //使用video元素的视频宽度和高度，需要延迟到视频完全打开
-  let width = videoElement.videoWidth;
-  let height = videoElement.videoHeight;
+   let width = JSON.parse(constraintSelect.value).width;
+   let height = JSON.parse(constraintSelect.value).height;
 
-  videoElement.width= constraintSelect.value;
+  videoElement.width= width;
   videoElement.height = height;
   //
-  let src = new cv.Mat(videoElement.videoHeight, videoElement.videoWidth, cv.CV_8UC4);
+  let src = new cv.Mat(height, width, cv.CV_8UC4);
   // let dst = new cv.Mat(videoElement.height, videoElement.width, cv.CV_8UC1);
   let cap = new cv.VideoCapture(videoElement);
 
