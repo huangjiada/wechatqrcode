@@ -98,7 +98,7 @@ function startDetect() {
     video: {
       width: { ideal: constraintSelect.value },
       // height: { ideal: videoElement.height },
-      facingMode: "user",
+      facingMode: "environment",//facingMode: 'user'
       deviceId: videoSource ? { exact: videoSource } : undefined
     },
     audio: false
